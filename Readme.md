@@ -5,7 +5,7 @@ Copyright (c) 2015 Taehoon Lee
 # Functions
 <li> `visualization\overlayLevel.m`: overlay coefficients (*e.g.* activation level) on an image. </li>
 <li> `visualization\plotEllipse.m`: plot a gaussian ellipsoid of a distribution. </li>
-
+<li> `computation\groupdistance.m`: return a n by m distance matrix. </li>
 # Example Codes and Results
 
 ### overlayLevel
@@ -46,3 +46,20 @@ legend({'samples', '1 sigma', '2 sigma'});
 hold off;
 ```
 ![Alt text](/visualization/results_plotEllipse.png?raw=true "Results of plotEllipse")
+
+### groupdistance
+```MATLAB
+% compare the built-in function
+D = groupdistance(X, X, 'euclidean');
+D2 = squareform(pdist(X'));
+fprintf('diff with pdist: %f\n', norm(D - D2, 'fro'));
+
+% generate 40 and 50 column vectors
+X = [randn(2,20)+ones(2,20), randn(2,20)-ones(2,20)];
+Y = [randn(2,50)];
+
+% calculate a 40 x 50 distance matrix
+D = groupdistance(X, Y, 'euclidean');
+figure; imagesc(D);
+```
+![Alt text](/computation/results_groupdistance.png?raw=true "Results of groupdistance")
